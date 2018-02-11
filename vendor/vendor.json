@@ -519,6 +519,14 @@
 			"versionExact": "v1.14.16"
 		},
 		{
+			"checksumSHA1": "YUq4+24dnuJLDYeNBaPb04WtAVw=",
+			"path": "github.com/aws/aws-sdk-go/service/datapipeline",
+			"revision": "5e98666858b97db54a61044bb1150d3b81436860",
+			"revisionTime": "2018-06-28T21:27:56Z",
+			"version": "v1.14.16",
+			"versionExact": "v1.14.16"
+		},
+		{
 			"checksumSHA1": "/zBS/FARxFnNMfLUg1Vq1FVK95c=",
 			"path": "github.com/aws/aws-sdk-go/service/dax",
 			"revision": "5e98666858b97db54a61044bb1150d3b81436860",
