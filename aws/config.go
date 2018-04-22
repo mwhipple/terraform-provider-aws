@@ -39,6 +39,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go/service/configservice"
 	"github.com/aws/aws-sdk-go/service/databasemigrationservice"
+	"github.com/aws/aws-sdk-go/service/datapipeline"
 	"github.com/aws/aws-sdk-go/service/dax"
 	"github.com/aws/aws-sdk-go/service/devicefarm"
 	"github.com/aws/aws-sdk-go/service/directconnect"
@@ -122,6 +123,7 @@ type Config struct {
 	CloudWatchEndpoint       string
 	CloudWatchEventsEndpoint string
 	CloudWatchLogsEndpoint   string
+	DataPipelineEndpoint     string
 	DynamoDBEndpoint         string
 	DeviceFarmEndpoint       string
 	Ec2Endpoint              string
@@ -234,6 +236,7 @@ type AWSClient struct {
 	budgetconn            *budgets.Budgets
 	neptuneconn           *neptune.Neptune
 	pricingconn           *pricing.Pricing
+	datapipelineconn      *datapipeline.DataPipeline
 }
 
 func (c *AWSClient) S3() *s3.S3 {
@@ -393,6 +396,7 @@ func (c *Config) Client() (interface{}, error) {
 	awsCwSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.CloudWatchEndpoint)})
 	awsCweSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.CloudWatchEventsEndpoint)})
 	awsCwlSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.CloudWatchLogsEndpoint)})
+	awsDataPipelineSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.DataPipelineEndpoint)})
 	awsDynamoSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.DynamoDBEndpoint)})
 	awsEc2Sess := sess.Copy(&aws.Config{Endpoint: aws.String(c.Ec2Endpoint)})
 	awsAutoscalingSess := sess.Copy(&aws.Config{Endpoint: aws.String(c.AutoscalingEndpoint)})
@@ -531,6 +535,7 @@ func (c *Config) Client() (interface{}, error) {
 	client.appsyncconn = appsync.New(sess)
 	client.neptuneconn = neptune.New(sess)
 	client.pricingconn = pricing.New(sess)
+	client.datapipelineconn = datapipeline.New(awsDataPipelineSess)
 
 	// Workaround for https://github.com/aws/aws-sdk-go/issues/1376
 	client.kinesisconn.Handlers.Retry.PushBack(func(r *request.Request) {

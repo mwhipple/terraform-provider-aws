@@ -354,6 +354,7 @@ func Provider() terraform.ResourceProvider {
 			"aws_codebuild_webhook":                            resourceAwsCodeBuildWebhook(),
 			"aws_codepipeline":                                 resourceAwsCodePipeline(),
 			"aws_customer_gateway":                             resourceAwsCustomerGateway(),
+			"aws_datapipeline":                                 resourceAwsDataPipeline(),
 			"aws_dax_cluster":                                  resourceAwsDaxCluster(),
 			"aws_dax_parameter_group":                          resourceAwsDaxParameterGroup(),
 			"aws_dax_subnet_group":                             resourceAwsDaxSubnetGroup(),
@@ -703,6 +704,8 @@ func init() {
 
 		"cloudwatchlogs_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n",
 
+		"datapipeline_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n",
+
 		"devicefarm_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n",
 
 		"dynamodb_endpoint": "Use this to override the default endpoint URL constructed from the `region`.\n" +
@@ -845,6 +848,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		config.SqsEndpoint = endpoints["sqs"].(string)
 		config.StsEndpoint = endpoints["sts"].(string)
 		config.SsmEndpoint = endpoints["ssm"].(string)
+		config.DataPipelineEndpoint = endpoints["datapipeline"].(string)
 	}
 
 	if v, ok := d.GetOk("allowed_account_ids"); ok {
@@ -943,6 +947,12 @@ func endpointsSchema() *schema.Schema {
 					Optional:    true,
 					Default:     "",
 					Description: descriptions["devicefarm_endpoint"],
+				},
+				"datapipeline": {
+					Type:        schema.TypeString,
+					Optional:    true,
+					Default:     "",
+					Description: descriptions["datapipeline_endpoint"],
 				},
 				"dynamodb": {
 					Type:        schema.TypeString,
@@ -1078,6 +1088,7 @@ func endpointsToHash(v interface{}) int {
 	buf.WriteString(fmt.Sprintf("%s-", m["cloudwatchevents"].(string)))
 	buf.WriteString(fmt.Sprintf("%s-", m["cloudwatchlogs"].(string)))
 	buf.WriteString(fmt.Sprintf("%s-", m["cloudformation"].(string)))
+	buf.WriteString(fmt.Sprintf("%s-", m["datapipeline"].(string)))
 	buf.WriteString(fmt.Sprintf("%s-", m["devicefarm"].(string)))
 	buf.WriteString(fmt.Sprintf("%s-", m["dynamodb"].(string)))
 	buf.WriteString(fmt.Sprintf("%s-", m["iam"].(string)))
