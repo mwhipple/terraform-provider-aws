@@ -52,6 +52,12 @@ func resourceAwsDataPipeline() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceAwsDataPipelineCreate,
 		Read:   resourceAwsDataPipelineRead,
+		Update: resourceAwsDataPipelineUpdate,
+		Delete: resourceAwsDataPipelineDelete,
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"activate": {
 				Type:     schema.TypeBool,
