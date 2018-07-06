@@ -399,7 +399,13 @@ func resourceAwsDataPipeline() *schema.Resource {
 						"directory_path": {
 							Type:          schema.TypeString,
 							Optional:      true,
-							ConflictsWith: []string{"file_path"},
+							ConflictsWith: []string{"s3_data_nodes.file_path"},
+						},
+
+						"file_path": {
+							Type:          schema.TypeString,
+							Optional:      true,
+							ConflictsWith: []string{"s3_data_nodes.directory_path"},
 						},
 
 						"failure_and_rerun_mode": {
@@ -407,12 +413,6 @@ func resourceAwsDataPipeline() *schema.Resource {
 							Optional:     true,
 							ValidateFunc: validation.StringInSlice(dataPipelineFailureAndRerunModeList, false),
 							Default:      "none",
-						},
-
-						"file_path": {
-							Type:          schema.TypeString,
-							Optional:      true,
-							ConflictsWith: []string{"directory_path"},
 						},
 
 						"maximum_retries": {
@@ -661,13 +661,13 @@ func resourceAwsDataPipeline() *schema.Resource {
 						"start_at": {
 							Type:          schema.TypeString,
 							Optional:      true,
-							ConflictsWith: []string{"start_date_time"},
+							ConflictsWith: []string{"schedules.start_date_time"},
 						},
 
 						"start_date_time": {
 							Type:          schema.TypeString,
 							Optional:      true,
-							ConflictsWith: []string{"start_at"},
+							ConflictsWith: []string{"schedules.start_at"},
 						},
 
 						"end_date_time": {
