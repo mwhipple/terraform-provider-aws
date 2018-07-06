@@ -322,6 +322,77 @@ func TestBuildRdsDatabasePipelineObject(t *testing.T) {
 	}
 }
 
+func TestBuildS3DataNodePipelineObject(t *testing.T) {
+	testCases := []pipelineObjectTestCase{
+		{
+			map[string]interface{}{
+				"id":             "bar",
+				"name":           "boo",
+				"compression":    "none",
+				"directory_path": "hogehoge",
+			},
+			&datapipeline.PipelineObject{
+				Id:   aws.String("bar"),
+				Name: aws.String("boo"),
+				Fields: []*datapipeline.Field{
+					{
+						Key:         aws.String("type"),
+						StringValue: aws.String("S3DataNode"),
+					},
+					{
+						Key:         aws.String("compression"),
+						StringValue: aws.String("none"),
+					},
+					{
+						Key:         aws.String("directory_path"),
+						StringValue: aws.String("hogehoge"),
+					},
+				},
+			},
+		},
+		{
+			map[string]interface{}{
+				"id":             "bar",
+				"name":           "boo",
+				"compression":    "gzip",
+				"directory_path": "hogehoge",
+			},
+			&datapipeline.PipelineObject{
+				Id:   aws.String("bar"),
+				Name: aws.String("boo"),
+				Fields: []*datapipeline.Field{
+					{
+						Key:         aws.String("type"),
+						StringValue: aws.String("S3DataNode"),
+					},
+					{
+						Key:         aws.String("compression"),
+						StringValue: aws.String("gzip"),
+					},
+					{
+						Key:         aws.String("directory_path"),
+						StringValue: aws.String("hogehoge"),
+					},
+				},
+			},
+		},
+	}
+
+	for i, testCase := range testCases {
+		result, err := buildS3DataNodePipelineObject(testCase.Attrs)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if !reflect.DeepEqual(result, testCase.Expected) {
+			t.Errorf(
+				"test case %d: got %#v, but want %#v",
+				i, result, testCase.Expected,
+			)
+		}
+	}
+}
+
 func TestBuildSQLDataNodePipelineObject(t *testing.T) {
 	testCases := []pipelineObjectTestCase{
 		{
