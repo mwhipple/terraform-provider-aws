@@ -556,6 +556,112 @@ func buildTsvDataFormatPipelineObject(rawTsvDataFormat map[string]interface{}) (
 	return pipelineObject, nil
 }
 
+func buildS3DataNodePipelineObject(rawS3DataNode map[string]interface{}) (*datapipeline.PipelineObject, error) {
+	pipelineObject := buildCommonPipelineObject(rawS3DataNode)
+	fieldList := []*datapipeline.Field{}
+
+	typeField := &datapipeline.Field{
+		Key:         aws.String("type"),
+		StringValue: aws.String("S3DataNode"),
+	}
+	fieldList = append(fieldList, typeField)
+
+	if val, ok := rawS3DataNode["compression"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("compression"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["data_format"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:      aws.String("data_format"),
+			RefValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["depends_on"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:      aws.String("depends_on"),
+			RefValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["directory_path"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("directory_path"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["file_path"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("file_path"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["failure_and_rerun_mode"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("failure_and_rerun_mode"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["maximum_retries"].(int); ok && val != 0 {
+		f := &datapipeline.Field{
+			Key:         aws.String("maximum_retries"),
+			StringValue: aws.String(strconv.Itoa(val)),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["on_fail"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:      aws.String("on_fail"),
+			RefValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["on_success"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:      aws.String("on_success"),
+			RefValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["pipeline_log_uri"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("pipeline_log_uri"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawS3DataNode["s3_encryption_type"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("s3_encryption_type"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	pipelineObject.SetFields(fieldList)
+	err := pipelineObject.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return pipelineObject, nil
+}
+
 func buildSQLDataNodePipelineObject(rawSQLDataNode map[string]interface{}) (*datapipeline.PipelineObject, error) {
 	pipelineObject := buildCommonPipelineObject(rawSQLDataNode)
 	fieldList := []*datapipeline.Field{}
