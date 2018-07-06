@@ -847,6 +847,16 @@ func resourceAwsDataPipelineUpdate(d *schema.ResourceData, meta interface{}) err
 		pipelineObjectsConfigs = append(pipelineObjectsConfigs, po)
 	}
 
+	s3DataNodes := d.Get("s3_data_nodes").([]interface{})
+	for _, s := range s3DataNodes {
+		s := s.(map[string]interface{})
+		po, err := buildSQLDataNodePipelineObject(s)
+		if err != nil {
+			return err
+		}
+		pipelineObjectsConfigs = append(pipelineObjectsConfigs, po)
+	}
+
 	sqlDataNodes := d.Get("sql_data_nodes").([]interface{})
 	for _, s := range sqlDataNodes {
 		s := s.(map[string]interface{})
