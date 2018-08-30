@@ -212,6 +212,50 @@ func buildEc2ResourcePipelineObject(rawEc2Resource map[string]interface{}) (*dat
 		fieldList = append(fieldList, f)
 	}
 
+	if val, ok := rawEc2Resource["security_group_ids"].([]string); ok && len(val) != 0 {
+		for _, v := range val {
+			f := &datapipeline.Field{
+				Key:         aws.String("securityGroupIds"),
+				StringValue: aws.String(v),
+			}
+			fieldList = append(fieldList, f)
+		}
+	}
+
+	if val, ok := rawEc2Resource["security_groups"].([]string); ok && len(val) != 0 {
+		for _, v := range val {
+			f := &datapipeline.Field{
+				Key:         aws.String("securityGroups"),
+				StringValue: aws.String(v),
+			}
+			fieldList = append(fieldList, f)
+		}
+	}
+
+	if val, ok := rawEc2Resource["subnet_id"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("subnetId"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawEc2Resource["terminate_after"].(string); ok && val != "" {
+		f := &datapipeline.Field{
+			Key:         aws.String("terminateAfter"),
+			StringValue: aws.String(val),
+		}
+		fieldList = append(fieldList, f)
+	}
+
+	if val, ok := rawEc2Resource["use_on_demand_on_last_attempt"].(bool); ok {
+		f := &datapipeline.Field{
+			Key:         aws.String("useOnDemandOnLastAttempt"),
+			StringValue: aws.String(strconv.FormatBool(val)),
+		}
+		fieldList = append(fieldList, f)
+	}
+
 	pipelineObject.SetFields(fieldList)
 
 	err := pipelineObject.Validate()
@@ -496,8 +540,15 @@ func buildCsvDataFormatPipelineObject(rawCsvDataFormat map[string]interface{}) (
 	fieldList = append(fieldList, typeField)
 
 	if val, ok := rawCsvDataFormat["column"].([]string); ok && len(val) != 0 {
-
+		for _, v := range val {
+			f := &datapipeline.Field{
+				Key:         aws.String("column"),
+				StringValue: aws.String(v),
+			}
+			fieldList = append(fieldList, f)
+		}
 	}
+
 	if val, ok := rawCsvDataFormat["escape_char"].(string); ok && val != "" {
 		f := &datapipeline.Field{
 			Key:         aws.String("escapeChar"),
@@ -527,7 +578,13 @@ func buildTsvDataFormatPipelineObject(rawTsvDataFormat map[string]interface{}) (
 	fieldList = append(fieldList, typeField)
 
 	if val, ok := rawTsvDataFormat["column"].([]string); ok && len(val) != 0 {
-
+		for _, v := range val {
+			f := &datapipeline.Field{
+				Key:         aws.String("column"),
+				StringValue: aws.String(v),
+			}
+			fieldList = append(fieldList, f)
+		}
 	}
 
 	if val, ok := rawTsvDataFormat["escape_char"].(string); ok && val != "" {

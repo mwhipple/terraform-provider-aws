@@ -109,11 +109,73 @@ func TestBuildEc2ResourcePipelineObject(t *testing.T) {
 				"id":   "bar",
 				"name": "boo",
 				"associate_public_ip_address": true,
-				"availability_zone":           "ap-northeast-1a",
 				"image_id":                    "i-xxxxxxxxxxxxxx",
 				"instance_type":               "t2.micro",
 				"max_active_instances":        10,
 				"maximum_retries":             5,
+				"security_group_ids": []string{
+					"sg-12345678",
+					"sg-23456789",
+				},
+				"subnet_id": "subnet-12345678",
+			},
+			&datapipeline.PipelineObject{
+				Id:   aws.String("bar"),
+				Name: aws.String("boo"),
+				Fields: []*datapipeline.Field{
+					{
+						Key:         aws.String("type"),
+						StringValue: aws.String("Ec2Resource"),
+					},
+					{
+						Key:         aws.String("associatePublicIpAddress"),
+						StringValue: aws.String("true"),
+					},
+					{
+						Key:         aws.String("imageId"),
+						StringValue: aws.String("i-xxxxxxxxxxxxxx"),
+					},
+					{
+						Key:         aws.String("instanceType"),
+						StringValue: aws.String("t2.micro"),
+					},
+					{
+						Key:         aws.String("maxActiveInstances"),
+						StringValue: aws.String("10"),
+					},
+					{
+						Key:         aws.String("maximumRetries"),
+						StringValue: aws.String("5"),
+					},
+					{
+						Key:         aws.String("securityGroupIds"),
+						StringValue: aws.String("sg-12345678"),
+					},
+					{
+						Key:         aws.String("securityGroupIds"),
+						StringValue: aws.String("sg-23456789"),
+					},
+					{
+						Key:         aws.String("subnetId"),
+						StringValue: aws.String("subnet-12345678"),
+					},
+				},
+			},
+		},
+		{
+			map[string]interface{}{
+				"id":   "bar",
+				"name": "boo",
+				"associate_public_ip_address": true,
+				"availability_zone":           "ap-northeast-1a",
+				"image_id":                    "i-xxxxxxxxxxxxxx",
+				"instance_type":               "m4.large",
+				"max_active_instances":        10,
+				"maximum_retries":             5,
+				"security_groups": []string{
+					"default",
+					"test-group",
+				},
 			},
 			&datapipeline.PipelineObject{
 				Id:   aws.String("bar"),
@@ -137,7 +199,7 @@ func TestBuildEc2ResourcePipelineObject(t *testing.T) {
 					},
 					{
 						Key:         aws.String("instanceType"),
-						StringValue: aws.String("t2.micro"),
+						StringValue: aws.String("m4.large"),
 					},
 					{
 						Key:         aws.String("maxActiveInstances"),
@@ -146,6 +208,14 @@ func TestBuildEc2ResourcePipelineObject(t *testing.T) {
 					{
 						Key:         aws.String("maximumRetries"),
 						StringValue: aws.String("5"),
+					},
+					{
+						Key:         aws.String("securityGroups"),
+						StringValue: aws.String("default"),
+					},
+					{
+						Key:         aws.String("securityGroups"),
+						StringValue: aws.String("test-group"),
 					},
 				},
 			},
