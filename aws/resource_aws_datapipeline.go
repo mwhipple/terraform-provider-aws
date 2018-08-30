@@ -250,6 +250,39 @@ func resourceAwsDataPipeline() *schema.Resource {
 							Optional:     true,
 							ValidateFunc: validation.StringInSlice(dataPipelineScheduleTypeList, false),
 						},
+
+						"security_group_ids": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem:     &schema.Schema{Type: schema.TypeString},
+						},
+
+						"security_groups": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem:     &schema.Schema{Type: schema.TypeString},
+						},
+
+						"spot_bid_price": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+
+						"subnet_id": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+
+						"terminate_after": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+
+						"use_on_demand_on_last_attempt": {
+							Type:     schema.TypeBool,
+							Optional: true,
+							Default:  false,
+						},
 					},
 				},
 			},
