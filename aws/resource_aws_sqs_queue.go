@@ -168,6 +168,7 @@ func resourceAwsSqsQueueCreate(d *schema.ResourceData, meta interface{}) error {
 
 	req := &sqs.CreateQueueInput{
 		QueueName: aws.String(name),
+		Tags:      tagsFromMapGeneric(d.Get("tags").(map[string]interface{})),
 	}
 
 	attributes := make(map[string]*string)
@@ -215,7 +216,7 @@ func resourceAwsSqsQueueCreate(d *schema.ResourceData, meta interface{}) error {
 
 	d.SetId(aws.StringValue(output.QueueUrl))
 
-	return resourceAwsSqsQueueUpdate(d, meta)
+	return resourceAwsSqsQueueRead(d, meta)
 }
 
 func resourceAwsSqsQueueUpdate(d *schema.ResourceData, meta interface{}) error {
