@@ -11,6 +11,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 )
 
+// TODO: Find test file to steal from
+
 func TestAccAWSDataPipelineDefinition_basic(t *testing.T) {
 	var conf datapipeline.GetPipelineDefinitionOutput
 	rName := fmt.Sprintf("tf-datapipeline-%s", acctest.RandString(5))
@@ -267,3 +269,5 @@ resource "aws_datapipeline_definition" "default" {
 }`, bucketName, failureAndRerunMode)
 
 }
+
+// TODO: Write some tests
