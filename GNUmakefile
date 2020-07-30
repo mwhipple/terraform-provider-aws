@@ -4,6 +4,8 @@ SWEEP_DIR?=./aws
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 PKG_NAME=aws
 TEST_COUNT?=1
+TEST_TIMEOUT:=120s
+TEST_PARALLELISM:=4
 ACCTEST_TIMEOUT?=120m
 ACCTEST_PARALLELISM?=20
 
@@ -21,7 +23,7 @@ sweep:
 	go test $(SWEEP_DIR) -v -sweep=$(SWEEP) $(SWEEPARGS) -timeout 60m
 
 test: fmtcheck
-	go test $(TEST) $(TESTARGS) -timeout=120s -parallel=4
+	go test $(TEST) $(TESTARGS) -timeout=$(TEST_TIMEOUT) -parallel=$(TEST_PARALLELISM)
 
 testacc: fmtcheck
 	@if [ "$(TESTARGS)" = "-run=TestAccXXX" ]; then \
@@ -37,6 +39,7 @@ testacc: fmtcheck
 	TF_ACC=1 go test ./$(PKG_NAME) -v -count $(TEST_COUNT) -parallel $(ACCTEST_PARALLELISM) $(TESTARGS) -timeout $(ACCTEST_TIMEOUT)
 
 fmt:
+	echo "$${PATH}"
 	@echo "==> Fixing source code with gofmt..."
 	gofmt -s -w ./$(PKG_NAME) ./awsproviderlint
 

@@ -6,10 +6,36 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/datapipeline"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
+
+/*
+func TestAccAWSDataPipelineDefinition_does_not_die(t *testing.T) {
+	var conf datapipeline.GetPipelineDefinitionOutput
+	rName := fmt.Sprintf("tf-datapipeline-%s", acctest.RandString(5))
+	resourceName := "aws_datapipeline_definition.default"
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { testAccPreCheck(t); testAccPreCheckAWSDataPipeline(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckAWSDataPipelineDefinitionDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccAWS,
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckAWSDataPipelineDefinitionExists(resourceName, &conf),
+					resource.TestCheckResourceAttPair(
+						"aws_datapipeline_pipeline.default", "id",
+						resourceName, "pipeline_id"),
+					resource.TestCheckResourceAttr(resourceName, "default.#", "1"),
+				),
+			},
+		},
+	})
+}
+*/
 
 func TestAccAWSDataPipelineDefinition_basic(t *testing.T) {
 	var conf datapipeline.GetPipelineDefinitionOutput
@@ -119,6 +145,7 @@ func TestAccAWSDataPipelineDefinition_disappears(t *testing.T) {
 	})
 }
 
+// testAccCheckAWSDataPipelineDefinitionDestroy verifies that the definition has been properly removed.
 func testAccCheckAWSDataPipelineDefinitionDestroy(s *terraform.State) error {
 	conn := testAccProvider.Meta().(*AWSClient).datapipelineconn
 
@@ -267,3 +294,5 @@ resource "aws_datapipeline_definition" "default" {
 }`, bucketName, failureAndRerunMode)
 
 }
+
+// TODO: Write some tests
