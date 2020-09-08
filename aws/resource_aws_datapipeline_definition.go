@@ -9,7 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/datapipeline"
 
+<<<<<<< HEAD
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+=======
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	//	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
@@ -37,15 +41,26 @@ import (
 // resourceAwsDataPipelineDefinition defines the resource as a whole.
 func resourceAwsDataPipelineDefinition() *schema.Resource {
 	return &schema.Resource{
+<<<<<<< HEAD
 		Create: resourceAwsDataPipelineDefinitionPut,
 		Read:   resourceAwsDataPipelineDefinitionRead,
 		Update: resourceAwsDataPipelineDefinitionPut,
 		Delete: schema.Noop,
+=======
+		Create:   resourceAwsDataPipelineDefinitionPut,
+		Read:     resourceAwsDataPipelineDefinitionRead,
+		Update:   resourceAwsDataPipelineDefinitionPut,
+		Delete:   schema.Noop,
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 		Importer: &schema.ResourceImporter{
 			State: resourceAwsDataPipelineDefinitionImport,
 		},
 
+<<<<<<< HEAD
 		Schema: pipelineDefinitionSchema(),
+=======
+		Schema:   pipelineDefinitionSchema(),
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	}
 }
 
@@ -71,6 +86,7 @@ func pipelineDefinitionSchema() map[string]*schema.Schema {
 			Type:        schema.TypeList,
 			Description: "Add a pipeline object to the definition.",
 			Required:    true,
+<<<<<<< HEAD
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"default":                    pipelineObjectDefaultSchema(),
@@ -84,6 +100,21 @@ func pipelineDefinitionSchema() map[string]*schema.Schema {
 					"shell_command_activity":     pipelineObjectShellCommandActivitySchema(),
 					"shell_command_precondition": pipelineObjectShellCommandPreconditionSchema(),
 					"sns_alarm":                  pipelineObjectSnsAlarmSchema(),
+=======
+			Elem:        &schema.Resource{
+				Schema: map[string]*schema.Schema{
+					"default":			pipelineObjectDefaultSchema(),
+					"dynamo_db_data_node":          pipelineObjectDynamoDBDataNodeSchema(),
+					"ec2_resource":			pipelineObjectEc2ResourceSchema(),
+					"my_sql_data_node":             pipelineObjectMySqlDataNodeSchema(),
+					"rds_database":                 pipelineObjectRdsDatabaseSchema(),
+					"redshift_copy_activity":       pipelineObjectRedshiftCopyActivitySchema(),
+					"redshift_database":		pipelineObjectRedshiftDatabaseSchema(),
+					"schedule":			pipelineObjectScheduleSchema(),
+					"shell_command_activity":       pipelineObjectShellCommandActivitySchema(),
+					"shell_command_precondition":	pipelineObjectShellCommandPreconditionSchema(),
+					"sns_alarm":                    pipelineObjectSnsAlarmSchema(),
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 				},
 			},
 		},
@@ -180,7 +211,11 @@ func pipelineObjectMySqlDataNodeSchema() *schema.Schema {
 		Description: "Identify the table within the database.",
 		Required:    true,
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	// Optional
 	arguments["attempt_status"] = pipelineObjectAttemptStatusArgument()
 	arguments["attempt_timeout"] = pipelineObjectAttemptTimeoutArgument()
@@ -196,7 +231,12 @@ func pipelineObjectMySqlDataNodeSchema() *schema.Schema {
 	}
 	arguments["depends_on"] = pipelineObjectDependsOnArgument()
 	arguments["failure_and_rerun_mode"] = pipelineObjectFailureAndRerunModeArgument()
+<<<<<<< HEAD
 	arguments["insert_query"] = &schema.Schema{}
+=======
+	arguments["insert_query"] = &schema.Schema{
+	}
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	arguments["schedule"] = pipelineObjectScheduleArgument()
 
 	return &schema.Schema{
@@ -240,7 +280,11 @@ func pipelineObjectRedshiftCopyActivitySchema() *schema.Schema {
 	arguments["failure_and_rerun_mode"] = pipelineObjectFailureAndRerunModeArgument()
 	arguments["input"] = &schema.Schema{
 		Type:        schema.TypeList,
+<<<<<<< HEAD
 		Description: "Specify the S3, DynamoDB, or Redshift input data node.",
+=======
+	        Description: "Specify the S3, DynamoDB, or Redshift input data node.",
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 		Optional:    true,
 		MaxItems:    1,
 		Elem:        pipelineObjectRefResource(),
@@ -253,7 +297,11 @@ func pipelineObjectRedshiftCopyActivitySchema() *schema.Schema {
 	arguments["on_success"] = pipelineObjectOnSuccessArgument()
 	arguments["output"] = &schema.Schema{
 		Type:        schema.TypeList,
+<<<<<<< HEAD
 		Description: "Specify the S3 or Redshift output data node.",
+=======
+	        Description: "Specify the S3 or Redshift output data node.",
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 		Optional:    true,
 		MaxItems:    1,
 		Elem:        pipelineObjectRefResource(),
@@ -337,7 +385,11 @@ func pipelineObjectRdsDatabaseSchema() *schema.Schema {
 		Description: "Specify the AWS region in which the database resides.",
 		Optional:    true,
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	return &schema.Schema{
 		Type:        schema.TypeList,
 		Description: "Define an RdsDatabase object.",
@@ -405,6 +457,10 @@ func pipelineObjectRedshiftDatabaseSchema() *schema.Schema {
 // Actions
 //
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 // pipelineObjectSnsAlarmSchema defines an SnsAlarm pipeline object.
 func pipelineObjectSnsAlarmSchema() *schema.Schema {
 	arguments := pipelineObjectBaseArguments()
@@ -431,6 +487,10 @@ func pipelineObjectSnsAlarmSchema() *schema.Schema {
 		Required:    true,
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	// Optional
 	arguments["parent"] = pipelineObjectParentArgument()
 
@@ -489,6 +549,10 @@ func pipelineObjectShellCommandActivitySchema() *schema.Schema {
 	}
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 // pipelineObjectShellCommandPreconditionSchema defines a ShellCommandPrecondition pipeline object.
 func pipelineObjectShellCommandPreconditionSchema() *schema.Schema {
 	arguments := pipelineObjectBaseArguments()
@@ -551,6 +615,10 @@ func pipelineObjectDependsOnArgument() *schema.Schema {
 	return pipelineObjectRefArgument()
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 func pipelineObjectFailureAndRerunModeArgument() *schema.Schema {
 	return &schema.Schema{
 		Type:        schema.TypeString,
@@ -656,7 +724,11 @@ func pipelineObjectScheduleTypeArgument() *schema.Schema {
 		Type:        schema.TypeString,
 		Description: "Indicate the type of scheduler which launches the pipeline.",
 		Optional:    true,
+<<<<<<< HEAD
 	}
+=======
+	}	
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 }
 
 // pipelineObjectBaseArguments defines some common arguments used across object types.
@@ -695,6 +767,10 @@ func pipelineObjectRefResource() *schema.Resource {
 	}
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 //
 // TRANSITION HANDLERS (not sure if there's a conventional name for this)
 //
@@ -711,7 +787,11 @@ func resourceAwsDataPipelineDefinitionPut(d *schema.ResourceData, meta interface
 	}
 
 	input := &datapipeline.PutPipelineDefinitionInput{
+<<<<<<< HEAD
 		PipelineId:      aws.String(pipelineID),
+=======
+		PipelineId: aws.String(pipelineID),
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 		PipelineObjects: pipelineObjects,
 	}
 
@@ -740,6 +820,10 @@ var dataPipelineFailureAndRerunModeList = []string{
 	"none",
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 func resourceAwsDataPipelineDefinitionRead(d *schema.ResourceData, meta interface{}) error {
 	conn := meta.(*AWSClient).datapipelineconn
 
@@ -806,14 +890,23 @@ func buildPipelineObject(o map[string]interface{}) (*datapipeline.PipelineObject
 			return nil, fmt.Errorf("Unexpected definition content: %v", defList)
 		}
 		oCount++
+<<<<<<< HEAD
 		if oCount > 1 {
+=======
+		if (oCount > 1) {
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 			return nil, fmt.Errorf("Too many definitions with one PipelineObject: %v", o)
 		}
 		def := defList[0].(map[string]interface{})
 		// def includes id and name which will be removed, but we also want type
 		fields := []*datapipeline.Field{
+<<<<<<< HEAD
 			{
 				Key:         aws.String("type"),
+=======
+			&datapipeline.Field{
+				Key: aws.String("type"),
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 				StringValue: snakeToCamel(oType, true),
 			},
 		}
@@ -847,7 +940,11 @@ func expandPipelineField(k string, v interface{}) (*datapipeline.Field, error) {
 				*key = "*password"
 			}
 			return &datapipeline.Field{
+<<<<<<< HEAD
 				Key:         key,
+=======
+				Key: key,
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 				StringValue: &strVal,
 			}, nil
 		} else {
@@ -855,18 +952,30 @@ func expandPipelineField(k string, v interface{}) (*datapipeline.Field, error) {
 		}
 	case int:
 		return &datapipeline.Field{
+<<<<<<< HEAD
 			Key:         snakeToCamel(k, false),
+=======
+			Key: snakeToCamel(k, false),
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 			StringValue: aws.String(strconv.Itoa(v.(int))),
 		}, nil
 	}
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	if a, ok := v.([]interface{}); ok {
 		if refVal, err := extractRef(a); err != nil {
 			return nil, fmt.Errorf("When converting: %s-%v; %v", k, v, err)
 		} else {
 			if refVal != nil {
 				return &datapipeline.Field{
+<<<<<<< HEAD
 					Key:      snakeToCamel(k, false),
+=======
+					Key: snakeToCamel(k, false),
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 					RefValue: refVal,
 				}, nil
 			} else {
@@ -896,9 +1005,15 @@ func extractRef(v []interface{}) (*string, error) {
 	return &val, nil
 }
 
+<<<<<<< HEAD
 func snakeToCamel(snake string, upNext bool) *string {
 	var sb strings.Builder
 
+=======
+func snakeToCamel(snake string, upNext bool) (*string) {
+	var sb strings.Builder
+	
+>>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 	for _, v := range snake {
 		switch v {
 		case '_':
