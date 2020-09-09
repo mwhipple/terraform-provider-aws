@@ -6,7 +6,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/datapipeline"
 
-<<<<<<< HEAD
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -37,14 +36,6 @@ func TestAccAWSDataPipelineDefinition_does_not_die(t *testing.T) {
 	})
 }
 */
-=======
-	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-)
-
-// TODO: Find test file to steal from
->>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 
 func TestAccAWSDataPipelineDefinition_basic(t *testing.T) {
 	var conf datapipeline.GetPipelineDefinitionOutput
@@ -154,10 +145,7 @@ func TestAccAWSDataPipelineDefinition_disappears(t *testing.T) {
 	})
 }
 
-<<<<<<< HEAD
 // testAccCheckAWSDataPipelineDefinitionDestroy verifies that the definition has been properly removed.
-=======
->>>>>>> f4a246621b7e0166a98d32c01436cabe94d8cb44
 func testAccCheckAWSDataPipelineDefinitionDestroy(s *terraform.State) error {
 	conn := testAccProvider.Meta().(*AWSClient).datapipelineconn
 
